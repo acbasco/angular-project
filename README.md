@@ -1,3 +1,14 @@
+# About
+Using the CSS Framework (Bootstrap 4), Angular, and https://reqres.in/ sample REST API, create an application with the following functionalities:
+* Basic Registration and Login
+* List all the user with pagination
+* Viewing user details
+* Create a user
+* Update a user details
+* Delete a user
+
+Not: Each action should have an alert message
+
 # AngularProject
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.9.
