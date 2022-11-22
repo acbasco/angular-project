@@ -7,6 +7,7 @@ import {RegisterComponent} from './core/components/register/register.component';
 import {UsersComponent} from './core/components/users/users.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserModule,
     NgbModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
