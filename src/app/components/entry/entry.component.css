@@ -1,0 +1,11 @@
+button {
+  font-size: 18px;
+}
+
+.selected-button {
+  border: 1px blue solid;
+}
+
+.unselected-button {
+  border-bottom: 2px solid gray;
+}

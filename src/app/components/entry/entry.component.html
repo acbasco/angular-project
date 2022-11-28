@@ -1,1 +1,35 @@
-<p>entry works!</p>
+<div class="container">
+  <!-- Form Buttons -->
+  <div class="row justify-content-center mb-2">
+    <div class="col-sm-6">
+      <div class="row">
+        <button
+          class="col btn"
+          [ngClass]="{
+            'btn-outline-primary': isRegisterSelected,
+            'unselected-button': isRegisterSelected
+          }"
+          (click)="onFormSelect(true)"
+        >
+          Register
+        </button>
+        <button
+          class="col btn"
+          [ngClass]="{
+            'btn-outline-primary': !isRegisterSelected,
+            'unselected-button': !isRegisterSelected
+          }"
+          (click)="onFormSelect(false)"
+        >
+          Login
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-sm-6 p-0" style="background-color: green">
+      <app-register *ngIf="isRegisterSelected"></app-register>
+      <app-login *ngIf="!isRegisterSelected"></app-login>
+    </div>
+  </div>
+</div>
