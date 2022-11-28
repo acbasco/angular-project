@@ -1,10 +1,49 @@
-<div class="container" style="background-color: red">
+<div class="container">
   <div class="row justify-content-center">
     <div class="col">
-      <p>
-        LOGIN BODY
-      </p>
+      <form action="#">
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="example@mail.com"
+            required
+          />
+        </div>
 
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password (At least 8 Characters)</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            minlength="8"
+            placeholder="********"
+            required
+          />
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="row">
+          <input
+            type="submit"
+            class="col btn btn-primary m-1"
+            value="Login"
+          />
+
+          <input type="reset" class="col btn btn-secondary m-1" value="Clear" />
+        </div>
+      </form>
+      <!--
+    public name: string,
+    public email: string,
+    public password: string,
+      -->
     </div>
   </div>
 </div>

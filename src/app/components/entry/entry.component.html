@@ -1,13 +1,13 @@
 <div class="container">
   <!-- Form Buttons -->
-  <div class="row justify-content-center mb-2">
+  <div class="row justify-content-center mb-2 align-middle">
     <div class="col-sm-6">
       <div class="row">
         <button
           class="col btn"
           [ngClass]="{
             'btn-outline-primary': isRegisterSelected,
-            'unselected-button': isRegisterSelected
+            'unselected-button': !isRegisterSelected
           }"
           (click)="onFormSelect(true)"
         >
@@ -17,7 +17,7 @@
           class="col btn"
           [ngClass]="{
             'btn-outline-primary': !isRegisterSelected,
-            'unselected-button': !isRegisterSelected
+            'unselected-button': isRegisterSelected
           }"
           (click)="onFormSelect(false)"
         >
@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-sm-6 p-0" style="background-color: green">
+    <div class="col-sm-6 p-2 border border-secondary rounded">
       <app-register *ngIf="isRegisterSelected"></app-register>
       <app-login *ngIf="!isRegisterSelected"></app-login>
     </div>
