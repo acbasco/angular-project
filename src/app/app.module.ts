@@ -5,10 +5,16 @@ import {AppComponent} from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
+import { EntryComponent } from './components/entry/entry.component';
+import { RegisterComponent } from './components/entry/register/register.component';
+import { LoginComponent } from './components/entry/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    EntryComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
