@@ -1,0 +1,33 @@
+1. Create designs for the following:
+  -> Home Page (DONE)
+    -> Register Form
+      -> Validation
+      -> Create account
+    -> Login Form
+      -> Validation (Done)
+      -> Login account
+  -> Account Page Component
+    -> Update details component
+  -> Admin Panel Component
+    -> Table
+      -> Headers (For Viewing)
+        -> id
+        -> name
+        -> username
+        -> email address
+        -> password
+      -> Headers (Actions)
+        -> Update Details -> Account Details Component
+        -> Delete
+2. Add validation to the forms
+3. List all user with pagination
+
+Main Components in Mind
+Common Components
+  -> Header
+Home Component
+  -> Register Component
+  -> Login Component
+-> (user & admin) Update Account Component
+-> (admin) Admin Panel
+

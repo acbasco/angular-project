@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col">
-      <form action="#">
+      <form [formGroup]="registerForm">
         <!-- Name -->
         <div class="form-group">
           <label for="name">Name: </label>
@@ -71,4 +71,3 @@
 </div>
 
 <app-alert [hidden]="!alertStatus"></app-alert>
-

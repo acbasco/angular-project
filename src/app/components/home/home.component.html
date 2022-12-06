@@ -4,7 +4,7 @@
     <div class="col-sm-6">
       <div class="row">
         <button
-          class="col btn"
+          class="col btn unselected-button"
           [ngClass]="{
             'btn-outline-primary': isRegisterSelected,
             'unselected-button': !isRegisterSelected
@@ -30,6 +30,7 @@
     <div class="col-sm-6 p-2 border border-secondary rounded">
       <app-register *ngIf="isRegisterSelected"></app-register>
       <app-login *ngIf="!isRegisterSelected"></app-login>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
