@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col">
-      <form [formGroup]="registerForm">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
         <!-- Name -->
         <div class="form-group">
           <label for="name">Name: </label>
@@ -99,7 +99,8 @@
           <!-- Password Validation Error -->
           <div
             *ngIf="
-              registerForm.get('password')?.invalid && registerForm.get('password')?.touched
+              registerForm.get('password')?.invalid &&
+              registerForm.get('password')?.touched
             "
           >
             <!-- Can't be empty -->
@@ -108,8 +109,7 @@
               *ngIf="registerForm.get('password')?.hasError('required')"
             >
               Password can't be empty.
-            </span
-            >
+            </span>
 
             <!-- Minimum length of 8 -->
             <span
@@ -117,8 +117,7 @@
               *ngIf="registerForm.get('password')?.hasError('minlength')"
             >
               Minimum length of 8.
-            </span
-            >
+            </span>
           </div>
         </div>
 
@@ -137,7 +136,8 @@
           <!-- Confirm Password Validation Error -->
           <div
             *ngIf="
-              registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched
+              registerForm.get('confirmPassword')?.invalid &&
+              registerForm.get('confirmPassword')?.touched
             "
           >
             <!-- Can't be empty -->
@@ -146,8 +146,7 @@
               *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
             >
               Confirm Password can't be empty.
-            </span
-            >
+            </span>
 
             <!-- Minimum length of 8 -->
             <span
@@ -155,12 +154,15 @@
               *ngIf="registerForm.get('confirmPassword')?.hasError('minlength')"
             >
               Minimum length of 8.
-            </span
-            >
+            </span>
 
             <!-- Must match password field -->
-            <span class="text-danger"
-              *ngIf="registerForm.get('confirmPassword')?.hasError('confirmPassword')">
+            <span
+              class="text-danger"
+              *ngIf="
+                registerForm.get('confirmPassword')?.hasError('passwordMismatch')
+              "
+            >
               Passwords do not match.
             </span>
           </div>
@@ -172,7 +174,6 @@
             type="submit"
             class="col btn btn-primary m-1"
             value="Create Account"
-            (click)="onRegister()"
           />
 
           <input type="reset" class="col btn btn-secondary m-1" value="Clear" />

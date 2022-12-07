@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +18,18 @@ export class FormValidatorService {
     return isWhiteSpace ? { whitespace: true } : null;
   }
 
-  static confirmPasswordValidator(formGroup: FormGroup) {
-    const password = formGroup.get('password')?.value;
-    const confirmPassword = formGroup.get('confirmPassword')?.value;
-    const isEqual = password == confirmPassword;
+  static confirmPasswordValidator(formGroup: AbstractControl): any {
+    const password: string = formGroup.get('password')?.value;
+    const confirmPassword: string = formGroup.get('confirmPassword')?.value;
 
-    return isEqual ? { confirmPassword: true }: null;
+    if (password !== confirmPassword) {
+      // Set an error to confirmPassword
+      formGroup.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+    }
+    return null;
+  }
+
+  static emailExistsValidator(formControl: FormControl) {
+    // const promise: Promise<any>()
   }
 }

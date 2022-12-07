@@ -1,7 +1,7 @@
 1. Create designs for the following:
   -> Home Page (DONE)
     -> Register Form
-      -> Validation
+      -> Validation (DONE)
       -> Create account
     -> Login Form
       -> Validation (Done)
