@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -11,5 +11,13 @@ export class FormValidatorService {
   static noWhiteSpaceValidator(formControl: FormControl) {
     const isWhiteSpace: boolean = (formControl.value || '').trim().length === 0;
     return isWhiteSpace ? { whitespace: true } : null;
+  }
+
+  static confirmPasswordValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+    const isEqual = password == confirmPassword;
+
+    return isEqual ? { confirmPassword: true }: null;
   }
 }

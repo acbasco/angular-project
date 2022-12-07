@@ -21,6 +21,16 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(2),
         FormValidatorService.noWhiteSpaceValidator,
       ]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+      confirmPassword: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(8),
+        FormValidatorService.confirmPasswordValidator,
+      ]),
     });
   }
 

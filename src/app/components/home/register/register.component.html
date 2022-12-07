@@ -10,8 +10,40 @@
             class="form-control"
             id="name"
             placeholder="Juan Dela Cruz"
-            required
+            formControlName="name"
           />
+
+          <!-- Name Validation Errors -->
+          <div
+            *ngIf="
+              registerForm.get('name')?.invalid &&
+              registerForm.get('name')?.touched
+            "
+          >
+            <!-- Can't be empty -->
+            <span
+              class="text-danger"
+              *ngIf="registerForm.get('name')?.hasError('required')"
+            >
+              Name can't be empty.
+            </span>
+
+            <!-- Minimum Length of 2 -->
+            <span
+              class="text-danger"
+              *ngIf="registerForm.get('name')?.hasError('minlength')"
+            >
+              Minimum length of 2.
+            </span>
+
+            <!-- No Whitespace -->
+            <span
+              class="text-danger"
+              *ngIf="registerForm.get('name')?.hasError('whitespace')"
+            >
+              Spaces only not allowed.
+            </span>
+          </div>
         </div>
 
         <!-- Email -->
@@ -22,8 +54,34 @@
             class="form-control"
             id="email"
             placeholder="example@mail.com"
-            required
+            formControlName="email"
           />
+
+          <!-- Email Validation Error -->
+          <div
+            *ngIf="
+              registerForm.get('email')?.invalid &&
+              registerForm.get('email')?.touched
+            "
+          >
+            <!-- Can't be empty -->
+            <span
+              class="text-danger"
+              *ngIf="registerForm.get('email')?.hasError('required')"
+            >
+              Email address can't be empty.
+            </span>
+
+            <!-- Valid email address -->
+            <span
+              class="text-danger"
+              *ngIf="registerForm.get('email')?.hasError('email')"
+            >
+              Please enter a valid email address.
+            </span>
+
+            <!-- TODO: Add email address already in use -->
+          </div>
         </div>
 
         <!-- Password -->
@@ -34,10 +92,34 @@
             class="form-control"
             name="password"
             id="password"
-            minlength="8"
             placeholder="********"
-            required
+            formControlName="password"
           />
+
+          <!-- Password Validation Error -->
+          <div
+            *ngIf="
+              registerForm.get('password')?.invalid && registerForm.get('password')?.touched
+            "
+          >
+            <!-- Can't be empty -->
+            <span
+              class="text-danger"
+              *ngIf="registerForm.get('password')?.hasError('required')"
+            >
+              Password can't be empty.
+            </span
+            >
+
+            <!-- Minimum length of 8 -->
+            <span
+              class="text-danger"
+              *ngIf="registerForm.get('password')?.hasError('minlength')"
+            >
+              Minimum length of 8.
+            </span
+            >
+          </div>
         </div>
 
         <!-- Confirm Password -->
@@ -48,10 +130,40 @@
             class="form-control"
             name="confirm-password"
             id="confirm-password"
-            minlength="8"
             placeholder="********"
-            required
+            formControlName="confirmPassword"
           />
+
+          <!-- Confirm Password Validation Error -->
+          <div
+            *ngIf="
+              registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched
+            "
+          >
+            <!-- Can't be empty -->
+            <span
+              class="text-danger"
+              *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
+            >
+              Confirm Password can't be empty.
+            </span
+            >
+
+            <!-- Minimum length of 8 -->
+            <span
+              class="text-danger"
+              *ngIf="registerForm.get('confirmPassword')?.hasError('minlength')"
+            >
+              Minimum length of 8.
+            </span
+            >
+
+            <!-- Must match password field -->
+            <span class="text-danger"
+              *ngIf="registerForm.get('confirmPassword')?.hasError('confirmPassword')">
+              Passwords do not match.
+            </span>
+          </div>
         </div>
 
         <!-- Control Buttons -->
