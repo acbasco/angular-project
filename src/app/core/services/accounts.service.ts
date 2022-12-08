@@ -4,19 +4,32 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CheckEmailResponse } from '../interfaces/check-email-response';
 import { RegisterAccountResponse } from '../interfaces/register-account-response';
+import { LoginCredentials } from '../models/login-credentials';
+import { LoginAccountResponse } from '../interfaces/login-account-response';
+import {AccountsResponse} from "../interfaces/accounts-response";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountsService {
-  // private url: string =
-  //   'https://angular-project-74899-default-rtdb.asia-southeast1.firebasedatabase.app/accounts.json';
   private baseUrl: string = 'https://acbasco.com/angular-api';
-
-  private _accounts: Account[] = [];
-  get accounts(): Account[] {
-    return this._accounts;
+  private _account!: Account | null;
+  get account(): Account | null {
+    return this._account;
   }
+
+  set account(value: Account | null) {
+    this._account = value;
+  }
+
+  // private _accounts: Account[] = [];
+  // get accounts(): Account[] {
+  //   return this._accounts;
+  // }
+  //
+  // set accounts(value: Account[]) {
+  //   this._accounts = value;
+  // }
 
   constructor(private http: HttpClient) {}
 
@@ -25,9 +38,16 @@ export class AccountsService {
     return this.http.post<CheckEmailResponse>(url, { email: email });
   }
 
-  createAccount(account: Account): Observable<RegisterAccountResponse> {
+  registerAccount(account: Account): Observable<RegisterAccountResponse> {
     const url: string = this.baseUrl + '/register.php';
     return this.http.post<RegisterAccountResponse>(url, account);
+  }
+
+  loginAccount(
+    loginCredentials: LoginCredentials
+  ): Observable<LoginAccountResponse> {
+    const url: string = this.baseUrl + '/login.php';
+    return this.http.post<LoginAccountResponse>(url, loginCredentials);
   }
 
   // getAccounts(): Account[] {
@@ -46,8 +66,12 @@ export class AccountsService {
   //   return this.accounts;
   // }
 
-  getAccounts(): Observable<Account[]> {
-    const url: string = this.baseUrl + '/accounts.php';
-    return this.http.get<Account[]>(url);
+  getAccounts(page: number): Observable<AccountsResponse> {
+    const url: string = this.baseUrl + `/accounts.php?page=${page}`;
+    return this.http.get<AccountsResponse>(url);
+  }
+
+  logout(): void {
+    this.account = null;
   }
 }
