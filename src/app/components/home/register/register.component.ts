@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormValidatorService } from '../../../core/services/form-validator.service';
 import { Account } from '../../../core/models/account';
-import { HttpClient } from '@angular/common/http';
 import { AccountsService } from '../../../core/services/accounts.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -13,9 +13,11 @@ import { AccountsService } from '../../../core/services/accounts.service';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 
-  alertStatus: boolean = false;
-
-  constructor(private accountsService: AccountsService) {}
+  constructor(
+    // Alert
+    private toastService: ToastrService,
+    private accountsService: AccountsService
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -24,7 +26,11 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(2),
         FormValidatorService.noWhiteSpaceValidator,
       ]),
-      email: new FormControl(null, [Validators.required, Validators.email]),
+      email: new FormControl(
+        null,
+        [Validators.required, Validators.email],
+        [FormValidatorService.emailExistsValidator(this.accountsService)]
+      ),
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),
@@ -39,20 +45,38 @@ export class RegisterComponent implements OnInit {
     this.registerForm.setValidators(
       FormValidatorService.confirmPasswordValidator
     );
-
-    this.accountsService.fetchAccounts().subscribe((accounts) => {});
   }
 
   onRegister() {
-    this.alertStatus = !this.alertStatus;
-
     let account: Account = new Account(
       null,
       this.registerForm.get('name')?.value,
       this.registerForm.get('email')?.value,
-      this.registerForm.get('password')?.value
+      this.registerForm.get('password')?.value,
+      null,
+      0,
+      1
     );
 
-    this.accountsService.createAccount(account);
+    this.accountsService.createAccount(account).subscribe((responseData) => {
+      if (responseData.status === 1) {
+        this.toastService.success(responseData.message, 'Status', {
+          closeButton: true,
+          tapToDismiss: true,
+          timeOut: 5000,
+          positionClass: 'toast-bottom-center'
+        });
+      } else {
+        this.toastService.error(responseData.message, 'Warning', {
+          closeButton: true,
+          tapToDismiss: true,
+          timeOut: 5000,
+          positionClass: 'toast-bottom-center'
+        });
+      }
+    });
+
+    // Clear the form
+    this.registerForm.reset();
   }
 }

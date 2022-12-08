@@ -81,6 +81,13 @@
             </span>
 
             <!-- TODO: Add email address already in use -->
+            <!-- Email already in use -->
+            <span
+              class="text-danger"
+              *ngIf="registerForm.get('email')?.hasError('emailInUse')"
+            >
+              Email address is already in use.
+            </span>
           </div>
         </div>
 
@@ -160,7 +167,9 @@
             <span
               class="text-danger"
               *ngIf="
-                registerForm.get('confirmPassword')?.hasError('passwordMismatch')
+                registerForm
+                  .get('confirmPassword')
+                  ?.hasError('passwordMismatch')
               "
             >
               Passwords do not match.
@@ -182,5 +191,3 @@
     </div>
   </div>
 </div>
-
-<app-alert [hidden]="!alertStatus"></app-alert>

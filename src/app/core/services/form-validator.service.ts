@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ValidatorFn,
-} from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormControl } from '@angular/forms';
+import { AccountsService } from './accounts.service';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormValidatorService {
-  constructor() {}
+  constructor(private accountsService: AccountsService) {}
 
   // https://stackoverflow.com/questions/39236992/how-to-validate-white-spaces-empty-spaces-angular-2
   static noWhiteSpaceValidator(formControl: FormControl) {
@@ -29,7 +26,33 @@ export class FormValidatorService {
     return null;
   }
 
-  static emailExistsValidator(formControl: FormControl) {
-    // const promise: Promise<any>()
+  // static emailExistsValidator(
+  //   formControl: FormControl
+  // ): Observable<ValidationErrors> | null {
+  //   inject(AccountsService)
+  //     .checkEmail(formControl.get('email')?.value)
+  //     .subscribe((responseData) => {
+  //       // return responseData.status ? { emailInUse: true } : null;
+  //       if (responseData.status === 1) {
+  //         return { emailInUse: true };
+  //       } else {
+  //         return null;
+  //       }
+  //     });
+  //   return null;
+  // }
+
+  // Study more
+  // https://www.concretepage.com/angular-2/angular-custom-async-validator-example
+  static emailExistsValidator(
+    accountsService: AccountsService
+  ): AsyncValidatorFn {
+    return (control: AbstractControl): any => {
+      return accountsService.checkEmail(control?.value).pipe(
+        map((responseData) => {
+          return responseData.status === 1 ? { emailInUse: true } : null;
+        })
+      );
+    };
   }
 }

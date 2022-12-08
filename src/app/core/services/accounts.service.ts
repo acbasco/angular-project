@@ -1,30 +1,53 @@
 import { Injectable } from '@angular/core';
 import { Account } from '../models/account';
 import { HttpClient } from '@angular/common/http';
-import {map, Observable} from 'rxjs';
+import { Observable } from 'rxjs';
+import { CheckEmailResponse } from '../interfaces/check-email-response';
+import { RegisterAccountResponse } from '../interfaces/register-account-response';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountsService {
-  private url: string =
-    'https://angular-project-74899-default-rtdb.asia-southeast1.firebasedatabase.app/accounts.json';
-  // reqres
-  // private url: string = 'https://reqres.in/api/users';
+  // private url: string =
+  //   'https://angular-project-74899-default-rtdb.asia-southeast1.firebasedatabase.app/accounts.json';
+  private baseUrl: string = 'https://acbasco.com/angular-api';
 
-  private accounts: Account[] = [];
+  private _accounts: Account[] = [];
+  get accounts(): Account[] {
+    return this._accounts;
+  }
 
   constructor(private http: HttpClient) {}
 
-  getAccounts(): Account[] {
-    return this.accounts.slice();
+  checkEmail(email: string): Observable<CheckEmailResponse> {
+    const url: string = this.baseUrl + '/check-email.php';
+    return this.http.post<CheckEmailResponse>(url, { email: email });
   }
 
-  createAccount(account: Account) {
-    this.http.post(this.url, account).subscribe((responseData) => {
-      console.log(responseData);
-    });
+  createAccount(account: Account): Observable<RegisterAccountResponse> {
+    const url: string = this.baseUrl + '/register.php';
+    return this.http.post<RegisterAccountResponse>(url, account);
   }
 
-  // fs
+  // getAccounts(): Account[] {
+  //   const url: string = this.baseUrl + '/accounts.php';
+  //   this.http
+  //     .get<Account[]>(url)
+  //     .pipe(
+  //       map((responseData) => {
+  //         console.log(responseData, typeof responseData);
+  //         this.accounts = responseData as Account[];
+  //       })
+  //     )
+  //     .subscribe((responseData: unknown) => {
+  //       this.accounts = responseData as Account[];
+  //     });
+  //   return this.accounts;
+  // }
+
+  getAccounts(): Observable<Account[]> {
+    const url: string = this.baseUrl + '/accounts.php';
+    return this.http.get<Account[]>(url);
+  }
 }
