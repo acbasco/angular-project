@@ -64,19 +64,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .registerAccount(account)
       .subscribe((responseData) => {
         if (responseData.status === 1) {
-          this.toastService.success(responseData.message, 'Status', {
-            closeButton: true,
-            tapToDismiss: true,
-            timeOut: 5000,
-            positionClass: 'toast-bottom-center',
-          });
+          this.toastService.success(responseData.message, 'Status');
         } else {
-          this.toastService.error(responseData.message, 'Warning', {
-            closeButton: true,
-            tapToDismiss: true,
-            timeOut: 5000,
-            positionClass: 'toast-bottom-center',
-          });
+          this.toastService.error(responseData.message, 'Warning');
         }
       });
 

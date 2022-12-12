@@ -42,41 +42,23 @@ export class LoginComponent implements OnInit, OnDestroy {
       .loginAccount(loginCredentials)
       .subscribe((responseData) => {
         if (responseData.status === 1) {
-          this.toastService.success(responseData.message, 'Welcome', {
-            closeButton: true,
-            tapToDismiss: true,
-            timeOut: 5000,
-            positionClass: 'toast-bottom-center',
-          });
+          this.toastService.success(responseData.message, 'Welcome');
 
           this.loginForm.reset();
 
           this.accountsService.account = responseData.account;
-          if (this.accountsService.account!.adminStatus === 0) {
-            // User only
-            this.router.navigate(['account-details'], {
-              relativeTo: this.activatedRoute,
+          if (this.accountsService.account?.adminStatus == 1) {
+            this.router.navigate(['home', 'admin-panel'], {
+              queryParams: { page: 1 },
+              queryParamsHandling: 'merge',
             });
           } else {
-            // Admin account
-            this.router.navigate(['admin-panel'], {
-              relativeTo: this.activatedRoute,
-            });
+            this.router.navigate(['home', 'account-details']);
           }
         } else if (responseData.status === 2) {
-          this.toastService.info(responseData.message, 'Notice', {
-            closeButton: true,
-            tapToDismiss: true,
-            timeOut: 5000,
-            positionClass: 'toast-bottom-center',
-          });
+          this.toastService.info(responseData.message, 'Notice');
         } else if (responseData.status === 3) {
-          this.toastService.error(responseData.message, 'Warning', {
-            closeButton: true,
-            tapToDismiss: true,
-            timeOut: 5000,
-            positionClass: 'toast-bottom-center',
-          });
+          this.toastService.error(responseData.message, 'Warning');
         }
       });
   }

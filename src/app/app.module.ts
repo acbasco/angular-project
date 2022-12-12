@@ -7,14 +7,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/common/header/header.component';
-import { RegisterComponent } from './components/home/register/register.component';
-import { LoginComponent } from './components/home/login/login.component';
+import { RegisterComponent } from './components/landing-page/register/register.component';
+import { LoginComponent } from './components/landing-page/login/login.component';
 import { AppRoutingModule } from './core/modules/app-routing.module';
 import { PageNotFoundComponent } from './components/common/page-not-found/page-not-found.component';
-import { AccountDetailsComponent } from './components/account-details/account-details.component';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AccountDetailsComponent } from './components/home/account-details/account-details.component';
+import { AdminPanelComponent } from './components/home/admin-panel/admin-panel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
     PageNotFoundComponent,
     AccountDetailsComponent,
     AdminPanelComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,12 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      closeButton: true,
+      tapToDismiss: true,
+      timeOut: 5000,
+      positionClass: 'toast-bottom-center',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

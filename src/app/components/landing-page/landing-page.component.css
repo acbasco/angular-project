@@ -1,0 +1,7 @@
+button {
+  font-size: 18px;
+}
+
+.unselected-button {
+  border-bottom: 2px solid gray;
+}

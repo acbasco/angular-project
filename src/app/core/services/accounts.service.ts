@@ -7,6 +7,8 @@ import { RegisterAccountResponse } from '../interfaces/register-account-response
 import { LoginCredentials } from '../models/login-credentials';
 import { LoginAccountResponse } from '../interfaces/login-account-response';
 import {AccountsResponse} from "../interfaces/accounts-response";
+import {UpdateAccountResponse} from "../interfaces/update-account-response";
+import {DeleteAccountResponse} from "../interfaces/delete-account-response";
 
 @Injectable({
   providedIn: 'root',
@@ -22,14 +24,14 @@ export class AccountsService {
     this._account = value;
   }
 
-  // private _accounts: Account[] = [];
-  // get accounts(): Account[] {
-  //   return this._accounts;
-  // }
-  //
-  // set accounts(value: Account[]) {
-  //   this._accounts = value;
-  // }
+  private _accounts: Account[] = [];
+  get accounts(): Account[] {
+    return this._accounts;
+  }
+
+  set accounts(value: Account[]) {
+    this._accounts = value;
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -41,6 +43,16 @@ export class AccountsService {
   registerAccount(account: Account): Observable<RegisterAccountResponse> {
     const url: string = this.baseUrl + '/register.php';
     return this.http.post<RegisterAccountResponse>(url, account);
+  }
+
+  updateAccount(account: Account): Observable<UpdateAccountResponse> {
+    const url: string = this.baseUrl + '/updateAccount.php';
+    return this.http.post<UpdateAccountResponse>(url, account);
+  }
+
+  deleteAccount(account: Account): Observable<DeleteAccountResponse> {
+    const url: string = this.baseUrl + '/deleteAccount.php';
+    return this.http.post<DeleteAccountResponse>(url, account);
   }
 
   loginAccount(
@@ -73,5 +85,6 @@ export class AccountsService {
 
   logout(): void {
     this.account = null;
+    this.accounts = [];
   }
 }

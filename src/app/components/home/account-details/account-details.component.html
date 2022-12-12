@@ -1,0 +1,233 @@
+<div class="row justify-content-center">
+  <div class="col-sm-6 p-2 border border-secondary rounded">
+    <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
+      <a class="navbar-brand">
+        <img
+          class="d-inline-block align-top"
+          src="../../../../assets/images/settings-icon.png"
+          alt="Settings Icon"
+          width="30"
+          height="30"
+        />
+        Account Details
+      </a>
+    </nav>
+    <br />
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-sm-12">
+          <form [formGroup]="updateAccountForm" (ngSubmit)="onUpdate()">
+            <!-- ID (Immutable) -->
+            <div class="form-group">
+              <span>
+                <strong>ID: {{ targetAccount?.id }}</strong>
+              </span>
+            </div>
+
+            <!-- Name -->
+            <div class="form-group">
+              <label for="name">Name: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                formControlName="name"
+              />
+
+              <!-- Name Validation Errors -->
+              <div
+                *ngIf="
+                  updateAccountForm.get('name')?.invalid &&
+                  updateAccountForm.get('name')?.touched
+                "
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="updateAccountForm.get('name')?.hasError('required')"
+                >
+                  Name can't be empty.
+                </span>
+
+                <!-- Minimum Length of 2 -->
+                <span
+                  class="text-danger"
+                  *ngIf="updateAccountForm.get('name')?.hasError('minlength')"
+                >
+                  Minimum length of 2.
+                </span>
+
+                <!-- No Whitespace -->
+                <span
+                  class="text-danger"
+                  *ngIf="updateAccountForm.get('name')?.hasError('whitespace')"
+                >
+                  Spaces only not allowed.
+                </span>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+              />
+
+              <!-- Email Validation Error -->
+              <div
+                *ngIf="
+                  updateAccountForm.get('email')?.invalid &&
+                  updateAccountForm.get('email')?.touched
+                "
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="updateAccountForm.get('email')?.hasError('required')"
+                >
+                  Email address can't be empty.
+                </span>
+
+                <!-- Valid email address -->
+                <span
+                  class="text-danger"
+                  *ngIf="updateAccountForm.get('email')?.hasError('email')"
+                >
+                  Please enter a valid email address.
+                </span>
+
+                <!-- Email already in use -->
+                <span
+                  class="text-danger"
+                  *ngIf="updateAccountForm.get('email')?.hasError('emailInUse')"
+                >
+                  Email address is already in use.
+                </span>
+              </div>
+            </div>
+
+            <!-- Password -->
+
+            <!-- Date Joined (Immutable) -->
+            <div class="form-group">
+              <span
+                ><strong>Date Joined: </strong
+                >{{ targetAccount?.dateJoined | date: "MMM d, y h:mm a" }}</span
+              >
+            </div>
+
+            <!-- Admin Status -->
+            <div class="form-group" *ngIf="currentAccount?.adminStatus == 1">
+              <span>Enable Admin Privileges?</span>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="adminStatus"
+                  value="1"
+                  id="adminStatusYes"
+                  formControlName="adminStatus"
+                />
+                <label for="adminStatusYes">Enable</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="adminStatus"
+                  value="0"
+                  id="adminStatusNo"
+                  formControlName="adminStatus"
+                />
+                <label for="adminStatusNo">Disable</label>
+              </div>
+            </div>
+
+            <!-- Account Status -->
+            <div class="form-group" *ngIf="currentAccount?.adminStatus == 1">
+              <span>Enable account?</span>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="accountStatus"
+                  value="1"
+                  id="accountStatusYes"
+                  formControlName="accountStatus"
+                />
+                <label for="accountStatusYes">Enable</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="accountStatus"
+                  value="0"
+                  id="accountStatusNo"
+                  formControlName="accountStatus"
+                />
+                <label for="accountStatusNo">Disable</label>
+              </div>
+            </div>
+
+            <!-- Form Controls -->
+            <div class="row">
+              <button
+                class="col btn btn-danger m-1"
+                type="button"
+                *ngIf="currentAccount.adminStatus == 1"
+                (click)="onDeletePrompt()"
+              >
+                DELETE ACCOUNT PERMANENTLY
+              </button>
+            </div>
+
+            <!-- Delete Confirm Button Prompts -->
+            <div class="row" *ngIf="deletePromptStatus">
+              <button type="button" class="btn btn-danger" (click)="onDelete()">YES</button>
+              <button type="button" class="btn btn-secondary" (click)="onDeletePrompt()">NO</button>
+            </div>
+
+            <div class="row">
+              <button
+                class="col btn btn-danger m-1"
+                type="button"
+                *ngIf="currentAccount.adminStatus == 0"
+                (click)="onLogout()"
+              >
+                Logout
+              </button>
+              <button
+                class="col btn btn-secondary m-1"
+                type="button"
+                *ngIf="currentAccount.adminStatus == 1"
+                (click)="onGoBack()"
+              >
+                Go Back
+              </button>
+
+              <button
+                class="col btn btn-primary m-1"
+                type="button"
+                (click)="onUpdate()"
+              >
+                Update Details
+              </button>
+
+              <input
+                class="col btn btn-secondary m-1"
+                type="button"
+                value="Clear"
+                (click)="onClear()"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

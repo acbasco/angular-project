@@ -80,7 +80,6 @@
               Please enter a valid email address.
             </span>
 
-            <!-- TODO: Add email address already in use -->
             <!-- Email already in use -->
             <span
               class="text-danger"
@@ -183,6 +182,7 @@
             type="submit"
             class="col btn btn-primary m-1"
             value="Create Account"
+            [disabled]="registerForm.invalid"
           />
 
           <input type="reset" class="col btn btn-secondary m-1" value="Clear" />

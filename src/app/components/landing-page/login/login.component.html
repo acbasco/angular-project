@@ -26,8 +26,7 @@
               *ngIf="loginForm.get('email')?.hasError('required')"
             >
               Email address can't be empty.
-            </span
-            >
+            </span>
 
             <!-- Valid email address -->
             <span
@@ -35,8 +34,7 @@
               *ngIf="loginForm.get('email')?.hasError('email')"
             >
               Please enter a valid email address.
-            </span
-            >
+            </span>
           </div>
         </div>
 
@@ -63,7 +61,7 @@
             <span
               class="text-danger"
               *ngIf="loginForm.get('password')?.hasError('required')"
-            >Password can't be empty.</span
+              >Password can't be empty.</span
             >
 
             <!-- Minimum-Length of 8 -->
@@ -72,16 +70,20 @@
               *ngIf="loginForm.get('password')?.hasError('minlength')"
             >
               Minimum of 8 characters needed.
-            </span
-            >
+            </span>
           </div>
         </div>
 
         <!-- Control Buttons -->
         <div class="row">
-          <input type="submit" class="col btn btn-primary m-1" value="Login"/>
+          <input
+            type="submit"
+            class="col btn btn-primary m-1"
+            value="Login"
+            [disabled]="loginForm.invalid"
+          />
 
-          <input type="reset" class="col btn btn-secondary m-1" value="Clear"/>
+          <input type="reset" class="col btn btn-secondary m-1" value="Clear" />
         </div>
       </form>
     </div>
