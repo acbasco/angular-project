@@ -7,6 +7,7 @@ import { FormValidatorService } from '../../../core/services/form-validator.serv
 import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-account-details',
@@ -26,7 +27,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private toastService: ToastrService,
-    private location: Location
+    private location: Location,
   ) {}
 
   ngOnInit(): void {

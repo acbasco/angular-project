@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 import { CheckEmailResponse } from '../interfaces/check-email-response';
 import { RegisterAccountResponse } from '../interfaces/register-account-response';
 import { LoginCredentials } from '../models/login-credentials';
-import { LoginAccountResponse } from '../interfaces/login-account-response';
-import {AccountsResponse} from "../interfaces/accounts-response";
-import {UpdateAccountResponse} from "../interfaces/update-account-response";
-import {DeleteAccountResponse} from "../interfaces/delete-account-response";
+import { AccountsResponse } from '../interfaces/accounts-response';
+import { UpdateAccountResponse } from '../interfaces/update-account-response';
+import { DeleteAccountResponse } from '../interfaces/delete-account-response';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,10 @@ export class AccountsService {
     this._accounts = value;
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthenticationService
+  ) {}
 
   checkEmail(email: string): Observable<CheckEmailResponse> {
     const url: string = this.baseUrl + '/check-email.php';
@@ -55,11 +58,16 @@ export class AccountsService {
     return this.http.post<DeleteAccountResponse>(url, account);
   }
 
-  loginAccount(
-    loginCredentials: LoginCredentials
-  ): Observable<LoginAccountResponse> {
+  // loginAccount(
+  //   loginCredentials: LoginCredentials
+  // ): Observable<LoginAccountResponse> {
+  //   const url: string = this.baseUrl + '/login.php';
+  //   return this.http.post<LoginAccountResponse>(url, loginCredentials);
+  // }
+  loginAccount(loginCredentials: LoginCredentials): Observable<any> {
     const url: string = this.baseUrl + '/login.php';
-    return this.http.post<LoginAccountResponse>(url, loginCredentials);
+    const body: string = JSON.stringify(loginCredentials);
+    return this.http.post(url, body);
   }
 
   // getAccounts(): Account[] {
@@ -78,13 +86,15 @@ export class AccountsService {
   //   return this.accounts;
   // }
 
-  getAccounts(page: number): Observable<AccountsResponse> {
-    const url: string = this.baseUrl + `/accounts.php?page=${page}`;
+  getAccounts(page: number, order: number): Observable<AccountsResponse> {
+    const url: string =
+      this.baseUrl + `/accounts.php?page=${page}&order=${order}`;
     return this.http.get<AccountsResponse>(url);
   }
 
   logout(): void {
     this.account = null;
     this.accounts = [];
+    this.authService.onLogout();
   }
 }

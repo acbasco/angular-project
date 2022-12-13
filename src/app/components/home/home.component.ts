@@ -6,13 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  isRegisterSelected: boolean = true;
-
   constructor() {}
 
   ngOnInit(): void {}
-
-  onFormSelect(choice: boolean): void {
-    this.isRegisterSelected = choice;
-  }
 }

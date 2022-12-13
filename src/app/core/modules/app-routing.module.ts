@@ -3,9 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from '../../components/common/page-not-found/page-not-found.component';
 import { HomeComponent } from '../../components/home/home.component';
 import { AccountDetailsComponent } from '../../components/home/account-details/account-details.component';
-import { AdminPanelComponent } from '../../components/home/admin-panel/admin-panel.component';
 import { AccountStatusGuard } from '../guards/account-status.guard';
 import { LandingPageComponent } from '../../components/landing-page/landing-page.component';
+import { AdminPanelComponent } from '../../components/home/admin-panel/admin-panel.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,13 +17,14 @@ const routes: Routes = [
   {
     path: 'landing-page',
     component: LandingPageComponent,
+    canActivate: [AuthGuard],
   },
   { path: 'register', redirectTo: 'landing-page' },
   { path: 'login', redirectTo: 'landing-page' },
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AccountStatusGuard],
+    canActivate: [AuthGuard, AccountStatusGuard],
     children: [
       {
         path: 'admin-panel',
@@ -32,11 +34,12 @@ const routes: Routes = [
         path: 'account-details/:id',
         component: AccountDetailsComponent,
       },
+      { path: '**', redirectTo: 'page-not-found' },
     ],
   },
 
   { path: 'page-not-found', component: PageNotFoundComponent },
-  { path: '**', redirectTo: 'page-not-found' },
+  // { path: '**', redirectTo: 'page-not-found' },
 ];
 
 @NgModule({

@@ -16,6 +16,7 @@ import { AdminPanelComponent } from './components/home/admin-panel/admin-panel.c
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,14 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
       tapToDismiss: true,
       timeOut: 5000,
       positionClass: 'toast-bottom-center',
+    }),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+        allowedDomains: ['https://acbasco.com'],
+      },
     }),
   ],
   providers: [],

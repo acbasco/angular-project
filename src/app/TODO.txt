@@ -6,6 +6,7 @@
     -> Login Form (DONE)
       -> Validation (Done)
       -> Login account (DONE)
+      -> Add JWT authentication
   -> Account Page Component
     -> Update details component
   -> Admin Panel Component
@@ -17,4 +18,3 @@
       -> Headers (Actions)
         -> Update Details -> Account Details Component
   -> Logout (w/ no back button) (DONE)
-

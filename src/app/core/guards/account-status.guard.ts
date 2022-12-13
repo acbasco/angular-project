@@ -16,10 +16,6 @@ export class AccountStatusGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if(this.accountsService.account == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return this.accountsService.account != null;
   }
 }
