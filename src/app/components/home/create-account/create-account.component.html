@@ -1,0 +1,285 @@
+<br />
+<div class="row justify-content-center">
+  <div class="col-sm-6 p-2 border border-secondary rounded">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <form [formGroup]="createAccountForm" (ngSubmit)="onRegister()">
+            <!-- Name -->
+            <div class="form-group">
+              <label for="name">Name: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Juan Dela Cruz"
+                formControlName="name"
+              />
+
+              <!-- Name Validation Errors -->
+              <div
+                *ngIf="
+                  createAccountForm.get('name')?.invalid &&
+                  createAccountForm.get('name')?.touched
+                "
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="createAccountForm.get('name')?.hasError('required')"
+                >
+                  Name can't be empty.
+                </span>
+
+                <!-- Minimum Length of 2 -->
+                <span
+                  class="text-danger"
+                  *ngIf="createAccountForm.get('name')?.hasError('minlength')"
+                >
+                  Minimum length of 2.
+                </span>
+
+                <!-- No Whitespace -->
+                <span
+                  class="text-danger"
+                  *ngIf="createAccountForm.get('name')?.hasError('whitespace')"
+                >
+                  Spaces only not allowed.
+                </span>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="example@mail.com"
+                formControlName="email"
+              />
+
+              <!-- Email Validation Error -->
+              <div
+                *ngIf="
+                  createAccountForm.get('email')?.invalid &&
+                  createAccountForm.get('email')?.touched
+                "
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="createAccountForm.get('email')?.hasError('required')"
+                >
+                  Email address can't be empty.
+                </span>
+
+                <!-- Valid email address -->
+                <span
+                  class="text-danger"
+                  *ngIf="createAccountForm.get('email')?.hasError('email')"
+                >
+                  Please enter a valid email address.
+                </span>
+
+                <!-- Email already in use -->
+                <span
+                  class="text-danger"
+                  *ngIf="createAccountForm.get('email')?.hasError('emailInUse')"
+                >
+                  Email address is already in use.
+                </span>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="password">Password (At least 8 Characters)</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="password"
+                placeholder="********"
+                formControlName="password"
+              />
+
+              <!-- Password Validation Error -->
+              <div
+                *ngIf="
+                  createAccountForm.get('password')?.invalid &&
+                  createAccountForm.get('password')?.touched
+                "
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    createAccountForm.get('password')?.hasError('required')
+                  "
+                >
+                  Password can't be empty.
+                </span>
+
+                <!-- Minimum length of 8 -->
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    createAccountForm.get('password')?.hasError('minlength')
+                  "
+                >
+                  Minimum length of 8.
+                </span>
+              </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label for="confirm-password">Confirm Password:</label>
+              <input
+                type="password"
+                class="form-control"
+                name="confirm-password"
+                id="confirm-password"
+                placeholder="********"
+                formControlName="confirmPassword"
+              />
+
+              <!-- Confirm Password Validation Error -->
+              <div
+                *ngIf="
+                  createAccountForm.get('confirmPassword')?.invalid &&
+                  createAccountForm.get('confirmPassword')?.touched
+                "
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    createAccountForm
+                      .get('confirmPassword')
+                      ?.hasError('required')
+                  "
+                >
+                  Confirm Password can't be empty.
+                </span>
+
+                <!-- Minimum length of 8 -->
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    createAccountForm
+                      .get('confirmPassword')
+                      ?.hasError('minlength')
+                  "
+                >
+                  Minimum length of 8.
+                </span>
+
+                <!-- Must match password field -->
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    createAccountForm
+                      .get('confirmPassword')
+                      ?.hasError('passwordMismatch')
+                  "
+                >
+                  Passwords do not match.
+                </span>
+              </div>
+            </div>
+
+            <!-- Admin Status -->
+            <span>Enable Admin Privileges?</span>
+            <div class="form-group">
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="adminStatus"
+                  value="1"
+                  id="adminStatusYes"
+                  formControlName="adminStatus"
+                />
+                <label for="adminStatusYes" class="form-check-label">
+                  Enable
+                </label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input form-check-inline"
+                  type="radio"
+                  name="adminStatus"
+                  value="0"
+                  id="adminStatusNo"
+                  formControlName="adminStatus"
+                  checked
+                />
+                <label for="adminStatusNo" class="form-check-label">
+                  Disable
+                </label>
+              </div>
+            </div>
+
+            <!-- Account Status -->
+            <span>Enable Account?</span>
+            <div class="form-group">
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="accountStatus"
+                  value="1"
+                  id="accountStatusYes"
+                  formControlName="accountStatus"
+                />
+                <label for="accountStatusYes" class="form-check-label">
+                  Enable
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="accountStatus"
+                  value="0"
+                  id="accountStatusNo"
+                  formControlName="accountStatus"
+                />
+                <label for="accountStatusNo" class="form-check-label">
+                  Disable
+                </label>
+              </div>
+            </div>
+
+            <!-- Control Buttons -->
+            <div class="row">
+              <button
+                type="button"
+                class="col btn btn-danger m-1"
+                (click)="onGoBack()"
+              >
+                Go Back
+              </button>
+              <input
+                type="submit"
+                class="col btn btn-primary m-1"
+                value="Create Account"
+                [disabled]="createAccountForm.invalid"
+              />
+
+              <input
+                type="reset"
+                class="col btn btn-secondary m-1"
+                value="Clear"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

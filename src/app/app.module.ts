@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { CreateAccountComponent } from './components/home/create-account/create-account.component';
 
 @NgModule({
   declarations: [
@@ -29,13 +30,13 @@ import { JwtModule } from '@auth0/angular-jwt';
     AccountDetailsComponent,
     AdminPanelComponent,
     LandingPageComponent,
+    CreateAccountComponent,
   ],
   imports: [
     BrowserModule,
     NgbModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
@@ -52,6 +53,7 @@ import { JwtModule } from '@auth0/angular-jwt';
         allowedDomains: ['https://acbasco.com'],
       },
     }),
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

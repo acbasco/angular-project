@@ -7,7 +7,7 @@ import { FormValidatorService } from '../../../core/services/form-validator.serv
 import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { AdminPanelService } from '../../../core/services/admin-panel.service';
 
 @Component({
   selector: 'app-account-details',
@@ -17,57 +17,64 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 export class AccountDetailsComponent implements OnInit, OnDestroy {
   idSub: Subscription | undefined;
   updateAccountForm!: FormGroup;
-  idParam!: number;
+  idParam!: string;
   targetAccount: Account | undefined;
   currentAccount!: Account;
   deletePromptStatus: boolean = false;
+  profilePicture!: string;
 
   constructor(
     private accountsService: AccountsService,
+    private adminPanelService: AdminPanelService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private toastService: ToastrService,
-    private location: Location,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
     this.currentAccount = this.accountsService.account!;
 
-    this.idSub = this.activatedRoute.params.subscribe((param: Params) => {
+    this.idSub = this.activatedRoute.params.subscribe((param: Params): void => {
       this.idParam = param['id'];
+      if (this.currentAccount.id == this.idParam) {
+        this.targetAccount = this.currentAccount;
+      } else {
+        this.targetAccount = this.accountsService.accounts.find(
+          (account: Account): boolean => {
+            return account.id == this.idParam;
+          }
+        );
+      }
 
-      this.targetAccount = this.accountsService.accounts.find((account) => {
-        return account.id == this.idParam;
+      // Set up the profile picture
+      this.profilePicture = `https://robohash.org/${this.targetAccount?.id}`;
+
+      this.updateAccountForm = new FormGroup({
+        name: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          FormValidatorService.noWhiteSpaceValidator,
+        ]),
+        email: new FormControl(
+          '',
+          [Validators.required, Validators.email],
+          [FormValidatorService.emailExistsValidator(this.accountsService)]
+        ),
+        adminStatus: new FormControl('', [Validators.required]),
+        accountStatus: new FormControl('', [Validators.required]),
       });
-    });
 
-    console.log(`CURRENT: ${this.currentAccount.email}`);
-    console.log(`TARGET: ${this.targetAccount?.email}`);
+      if (this.targetAccount == null) {
+        this.targetAccount = this.currentAccount;
+      }
 
-    this.updateAccountForm = new FormGroup({
-      name: new FormControl('', [
-        Validators.required,
-        Validators.minLength(2),
-        FormValidatorService.noWhiteSpaceValidator,
-      ]),
-      email: new FormControl(
-        '',
-        [Validators.required, Validators.email],
-        [FormValidatorService.emailExistsValidator(this.accountsService)]
-      ),
-      adminStatus: new FormControl('', [Validators.required]),
-      accountStatus: new FormControl('', [Validators.required]),
-    });
-
-    if (this.targetAccount == null) {
-      this.targetAccount = this.currentAccount;
-    }
-
-    this.updateAccountForm.setValue({
-      name: this.targetAccount?.name,
-      email: this.targetAccount?.email,
-      adminStatus: this.targetAccount?.adminStatus,
-      accountStatus: this.targetAccount?.accountStatus,
+      this.updateAccountForm.setValue({
+        name: this.targetAccount?.name,
+        email: this.targetAccount?.email,
+        adminStatus: this.targetAccount?.adminStatus,
+        accountStatus: this.targetAccount?.accountStatus,
+      });
     });
   }
 
@@ -86,14 +93,20 @@ export class AccountDetailsComponent implements OnInit, OnDestroy {
         if (responseData.status === 1) {
           this.toastService.success(responseData.message, 'Status');
           this.onClear();
-          this.location.back();
+
+          // Check if own account is deleted
+          if (this.currentAccount.id == this.targetAccount?.id) {
+            this.onLogout();
+          } else {
+            this.location.back();
+          }
         } else {
           this.toastService.error(responseData.message, 'Error');
         }
       });
   }
 
-  onUpdate() {
+  onUpdate(): void {
     let formName: string = this.updateAccountForm.get('name')?.value;
     let formEmail: string = this.updateAccountForm.get('email')?.value;
     let formAdminStatus: number =
@@ -122,30 +135,60 @@ export class AccountDetailsComponent implements OnInit, OnDestroy {
     newAccount.adminStatus = formAdminStatus;
     newAccount.accountStatus = formAccountStatus;
 
-    this.accountsService.updateAccount(newAccount).subscribe((responseData) => {
-      if (responseData.status === 1) {
-        this.toastService.success(responseData.message, 'Status');
-        this.onClear();
-        this.location.back();
-      } else {
-        this.toastService.error(responseData.message, 'Error');
-      }
-    });
+    this.accountsService
+      .updateAccount(newAccount)
+      .subscribe((responseData): void => {
+        console.log(`Current Account: ${this.currentAccount.id}`);
+        console.log(`New Account: ${newAccount.id}`);
+        console.log(`Target Account: ${this.targetAccount?.id}`);
+        if (responseData.status === 1) {
+          /*
+            If the newAccount is equal to the current account AND
+              If the newAccount's status is disabled, logout OR
+              If the newAccount's admin status is disabled, logout
+           */
+          // If the newAccount is equal to the current account,
+          //  and the newAccount's status is set to disabled, force logout
+          if (
+            newAccount.id == this.currentAccount.id &&
+            (newAccount.accountStatus == 0 || newAccount.adminStatus == 0) &&
+            this.currentAccount.adminStatus == 1
+          ) {
+            this.onLogout();
+          } else {
+            // If new account is the same as the target account
+            // Update the local storage
+            if (newAccount.id == this.accountsService.account?.id) {
+              localStorage.setItem('account', JSON.stringify(newAccount));
+            }
+
+            this.toastService.success(responseData.message, 'Status');
+            this.onClear();
+            this.router
+              .navigate(['/home', 'admin-panel'], {
+                relativeTo: this.activatedRoute,
+                queryParams: {
+                  page: this.adminPanelService.page,
+                  order: this.adminPanelService.order,
+                },
+              })
+              .then();
+          }
+        } else {
+          this.toastService.error(responseData.message, 'Error');
+        }
+      });
   }
 
-  onLogout() {
+  onLogout(): void {
     this.accountsService.logout();
 
-    // Toast
-    this.toastService.success('Successfully logged out.', 'Status', {
-      closeButton: true,
-      tapToDismiss: true,
-      timeOut: 5000,
-      positionClass: 'toast-bottom-center',
-    });
+    this.toastService.success('Successfully logged out.', 'Status');
 
     // Navigate to home page
-    this.router.navigate([''], { relativeTo: this.activatedRoute });
+    this.router.navigate(['/landing-page'], {
+      relativeTo: this.activatedRoute,
+    });
   }
 
   onGoBack(): void {

@@ -1,3 +1,4 @@
+<br />
 <div class="row justify-content-center">
   <div class="col-sm-6 p-2 border border-secondary rounded">
     <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
@@ -17,6 +18,9 @@
       <div class="row justify-content-center">
         <div class="col-sm-12">
           <form [formGroup]="updateAccountForm" (ngSubmit)="onUpdate()">
+            <!-- Profile Picture -->
+            <img src="{{ profilePicture }}" alt="Profile Picture" class="rounded mx-auto d-block border border-dark"/>
+
             <!-- ID (Immutable) -->
             <div class="form-group">
               <span>
@@ -116,61 +120,75 @@
             <div class="form-group">
               <span
                 ><strong>Date Joined: </strong
-                >{{ targetAccount?.dateJoined | date: "MMM d, y h:mm a" }}</span
+                >{{
+                  targetAccount?.dateJoined | date : "MMM d, y h:mm a"
+                }}</span
               >
             </div>
 
             <!-- Admin Status -->
-            <div class="form-group" *ngIf="currentAccount?.adminStatus == 1">
+            <div *ngIf="currentAccount?.adminStatus == 1">
               <span>Enable Admin Privileges?</span>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="adminStatus"
-                  value="1"
-                  id="adminStatusYes"
-                  formControlName="adminStatus"
-                />
-                <label for="adminStatusYes">Enable</label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="adminStatus"
-                  value="0"
-                  id="adminStatusNo"
-                  formControlName="adminStatus"
-                />
-                <label for="adminStatusNo">Disable</label>
+              <div class="form-group">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="adminStatus"
+                    value="1"
+                    id="adminStatusYes"
+                    formControlName="adminStatus"
+                  />
+                  <label for="adminStatusYes" class="form-check-label"
+                    >Enable</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="adminStatus"
+                    value="0"
+                    id="adminStatusNo"
+                    formControlName="adminStatus"
+                  />
+                  <label for="adminStatusNo" class="form-check-label"
+                    >Disable</label
+                  >
+                </div>
               </div>
             </div>
 
             <!-- Account Status -->
-            <div class="form-group" *ngIf="currentAccount?.adminStatus == 1">
-              <span>Enable account?</span>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="accountStatus"
-                  value="1"
-                  id="accountStatusYes"
-                  formControlName="accountStatus"
-                />
-                <label for="accountStatusYes">Enable</label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="accountStatus"
-                  value="0"
-                  id="accountStatusNo"
-                  formControlName="accountStatus"
-                />
-                <label for="accountStatusNo">Disable</label>
+            <div *ngIf="currentAccount?.adminStatus == 1">
+              <span>Enable Account?</span>
+              <div class="form-group">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="accountStatus"
+                    value="1"
+                    id="accountStatusYes"
+                    formControlName="accountStatus"
+                  />
+                  <label for="accountStatusYes" class="form-check-label"
+                    >Enable</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="accountStatus"
+                    value="0"
+                    id="accountStatusNo"
+                    formControlName="accountStatus"
+                  />
+                  <label for="accountStatusNo" class="form-check-label"
+                    >Disable</label
+                  >
+                </div>
               </div>
             </div>
 
@@ -188,8 +206,16 @@
 
             <!-- Delete Confirm Button Prompts -->
             <div class="row" *ngIf="deletePromptStatus">
-              <button type="button" class="btn btn-danger" (click)="onDelete()">YES</button>
-              <button type="button" class="btn btn-secondary" (click)="onDeletePrompt()">NO</button>
+              <button type="button" class="btn btn-danger" (click)="onDelete()">
+                YES
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="onDeletePrompt()"
+              >
+                NO
+              </button>
             </div>
 
             <div class="row">

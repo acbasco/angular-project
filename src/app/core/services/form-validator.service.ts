@@ -26,23 +26,7 @@ export class FormValidatorService {
     return null;
   }
 
-  // static emailExistsValidator(
-  //   formControl: FormControl
-  // ): Observable<ValidationErrors> | null {
-  //   inject(AccountsService)
-  //     .checkEmail(formControl.get('email')?.value)
-  //     .subscribe((responseData) => {
-  //       // return responseData.status ? { emailInUse: true } : null;
-  //       if (responseData.status === 1) {
-  //         return { emailInUse: true };
-  //       } else {
-  //         return null;
-  //       }
-  //     });
-  //   return null;
-  // }
-
-  // Study more
+  // TODO: Study more
   // https://www.concretepage.com/angular-2/angular-custom-async-validator-example
   static emailExistsValidator(
     accountsService: AccountsService

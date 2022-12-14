@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginCredentials } from '../../../core/models/login-credentials';
-import { AccountsService } from '../../../core/services/accounts.service';
-import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { AuthenticationService } from '../../../core/services/authentication.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {LoginCredentials} from '../../../core/models/login-credentials';
+import {AccountsService} from '../../../core/services/accounts.service';
+import {ToastrService} from 'ngx-toastr';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {AuthenticationService} from '../../../core/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private toastService: ToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -52,11 +53,14 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.loginForm.reset();
 
           this.accountsService.account = responseData.account;
+          // Save account
+          localStorage.setItem('account', JSON.stringify(this.accountsService.account));
+
           if (this.accountsService.account?.adminStatus == 1) {
             this.router
               .navigate(['/home', 'admin-panel'], {
                 relativeTo: this.activatedRoute,
-                queryParams: { page: 1, order: 1 },
+                queryParams: {page: 1, order: 1},
               })
               .then();
           } else {

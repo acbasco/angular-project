@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onViewAccount(): void {
-    const id: number = this.accountsService.account?.id!;
+    const id: string = this.accountsService.account?.id!;
 
     this.router
       .navigate(['/home', 'account-details', id], {

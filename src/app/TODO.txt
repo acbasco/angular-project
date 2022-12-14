@@ -4,17 +4,14 @@
       -> Validation (DONE)
       -> Create account (DONE)
     -> Login Form (DONE)
-      -> Validation (Done)
+      -> Validation (DONE))
       -> Login account (DONE)
-      -> Add JWT authentication
+      -> Add JWT authentication (DONE)
   -> Account Page Component
-    -> Update details component
+    -> Update details component (DONE)
   -> Admin Panel Component
     -> Table (DONE)
       -> Headers (For Viewing) (DONE)
-        -> id
-        -> name
-        -> email address
-      -> Headers (Actions)
-        -> Update Details -> Account Details Component
+      -> Headers (Actions) (DONE)
+        -> Manage Account (DONE)
   -> Logout (w/ no back button) (DONE)

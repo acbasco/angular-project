@@ -1,91 +1,95 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-        <!-- Email -->
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            placeholder="example@mail.com"
-            formControlName="email"
-          />
+<div class="row justify-content-center">
+  <div class="col-sm-6 p-2 border border-secondary rounded">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="example@mail.com"
+                formControlName="email"
+              />
 
-          <!-- Email Validation Error -->
-          <div
-            *ngIf="
+              <!-- Email Validation Error -->
+              <div
+                *ngIf="
               loginForm.get('email')?.invalid && loginForm.get('email')?.touched
             "
-          >
-            <!-- Can't be empty -->
-            <span
-              class="text-danger"
-              *ngIf="loginForm.get('email')?.hasError('required')"
-            >
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="loginForm.get('email')?.hasError('required')"
+                >
               Email address can't be empty.
             </span>
 
-            <!-- Valid email address -->
-            <span
-              class="text-danger"
-              *ngIf="loginForm.get('email')?.hasError('email')"
-            >
+                <!-- Valid email address -->
+                <span
+                  class="text-danger"
+                  *ngIf="loginForm.get('email')?.hasError('email')"
+                >
               Please enter a valid email address.
             </span>
-          </div>
-        </div>
+              </div>
+            </div>
 
-        <!-- Password -->
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            placeholder="********"
-            formControlName="password"
-          />
+            <!-- Password -->
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                placeholder="********"
+                formControlName="password"
+              />
 
-          <!-- Password Validation Error -->
-          <div
-            *ngIf="
+              <!-- Password Validation Error -->
+              <div
+                *ngIf="
               loginForm.get('password')?.invalid &&
               loginForm.get('password')?.touched
             "
-          >
-            <!-- Can't be empty -->
-            <span
-              class="text-danger"
-              *ngIf="loginForm.get('password')?.hasError('required')"
-              >Password can't be empty.</span
-            >
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="loginForm.get('password')?.hasError('required')"
+                >Password can't be empty.</span
+                >
 
-            <!-- Minimum-Length of 8 -->
-            <span
-              class="text-danger"
-              *ngIf="loginForm.get('password')?.hasError('minlength')"
-            >
+                <!-- Minimum-Length of 8 -->
+                <span
+                  class="text-danger"
+                  *ngIf="loginForm.get('password')?.hasError('minlength')"
+                >
               Minimum of 8 characters needed.
             </span>
-          </div>
-        </div>
+              </div>
+            </div>
 
-        <!-- Control Buttons -->
-        <div class="row">
-          <input
-            type="submit"
-            class="col btn btn-primary m-1"
-            value="Login"
-            [disabled]="loginForm.invalid"
-          />
+            <!-- Control Buttons -->
+            <div class="row">
+              <input
+                type="submit"
+                class="col btn btn-primary m-1"
+                value="Login"
+                [disabled]="loginForm.invalid"
+              />
 
-          <input type="reset" class="col btn btn-secondary m-1" value="Clear" />
+              <input type="reset" class="col btn btn-secondary m-1" value="Clear"/>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>

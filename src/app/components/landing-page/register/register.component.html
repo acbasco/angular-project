@@ -1,193 +1,197 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col">
-      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-        <!-- Name -->
-        <div class="form-group">
-          <label for="name">Name: </label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            placeholder="Juan Dela Cruz"
-            formControlName="name"
-          />
+<div class="row justify-content-center">
+  <div class="col-sm-6 p-2 border border-secondary rounded">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+            <!-- Name -->
+            <div class="form-group">
+              <label for="name">Name: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Juan Dela Cruz"
+                formControlName="name"
+              />
 
-          <!-- Name Validation Errors -->
-          <div
-            *ngIf="
+              <!-- Name Validation Errors -->
+              <div
+                *ngIf="
               registerForm.get('name')?.invalid &&
               registerForm.get('name')?.touched
             "
-          >
-            <!-- Can't be empty -->
-            <span
-              class="text-danger"
-              *ngIf="registerForm.get('name')?.hasError('required')"
-            >
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="registerForm.get('name')?.hasError('required')"
+                >
               Name can't be empty.
             </span>
 
-            <!-- Minimum Length of 2 -->
-            <span
-              class="text-danger"
-              *ngIf="registerForm.get('name')?.hasError('minlength')"
-            >
+                <!-- Minimum Length of 2 -->
+                <span
+                  class="text-danger"
+                  *ngIf="registerForm.get('name')?.hasError('minlength')"
+                >
               Minimum length of 2.
             </span>
 
-            <!-- No Whitespace -->
-            <span
-              class="text-danger"
-              *ngIf="registerForm.get('name')?.hasError('whitespace')"
-            >
+                <!-- No Whitespace -->
+                <span
+                  class="text-danger"
+                  *ngIf="registerForm.get('name')?.hasError('whitespace')"
+                >
               Spaces only not allowed.
             </span>
-          </div>
-        </div>
+              </div>
+            </div>
 
-        <!-- Email -->
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            placeholder="example@mail.com"
-            formControlName="email"
-          />
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="example@mail.com"
+                formControlName="email"
+              />
 
-          <!-- Email Validation Error -->
-          <div
-            *ngIf="
+              <!-- Email Validation Error -->
+              <div
+                *ngIf="
               registerForm.get('email')?.invalid &&
               registerForm.get('email')?.touched
             "
-          >
-            <!-- Can't be empty -->
-            <span
-              class="text-danger"
-              *ngIf="registerForm.get('email')?.hasError('required')"
-            >
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="registerForm.get('email')?.hasError('required')"
+                >
               Email address can't be empty.
             </span>
 
-            <!-- Valid email address -->
-            <span
-              class="text-danger"
-              *ngIf="registerForm.get('email')?.hasError('email')"
-            >
+                <!-- Valid email address -->
+                <span
+                  class="text-danger"
+                  *ngIf="registerForm.get('email')?.hasError('email')"
+                >
               Please enter a valid email address.
             </span>
 
-            <!-- Email already in use -->
-            <span
-              class="text-danger"
-              *ngIf="registerForm.get('email')?.hasError('emailInUse')"
-            >
+                <!-- Email already in use -->
+                <span
+                  class="text-danger"
+                  *ngIf="registerForm.get('email')?.hasError('emailInUse')"
+                >
               Email address is already in use.
             </span>
-          </div>
-        </div>
+              </div>
+            </div>
 
-        <!-- Password -->
-        <div class="form-group">
-          <label for="password">Password (At least 8 Characters)</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            id="password"
-            placeholder="********"
-            formControlName="password"
-          />
+            <!-- Password -->
+            <div class="form-group">
+              <label for="password">Password (At least 8 Characters)</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="password"
+                placeholder="********"
+                formControlName="password"
+              />
 
-          <!-- Password Validation Error -->
-          <div
-            *ngIf="
+              <!-- Password Validation Error -->
+              <div
+                *ngIf="
               registerForm.get('password')?.invalid &&
               registerForm.get('password')?.touched
             "
-          >
-            <!-- Can't be empty -->
-            <span
-              class="text-danger"
-              *ngIf="registerForm.get('password')?.hasError('required')"
-            >
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="registerForm.get('password')?.hasError('required')"
+                >
               Password can't be empty.
             </span>
 
-            <!-- Minimum length of 8 -->
-            <span
-              class="text-danger"
-              *ngIf="registerForm.get('password')?.hasError('minlength')"
-            >
+                <!-- Minimum length of 8 -->
+                <span
+                  class="text-danger"
+                  *ngIf="registerForm.get('password')?.hasError('minlength')"
+                >
               Minimum length of 8.
             </span>
-          </div>
-        </div>
+              </div>
+            </div>
 
-        <!-- Confirm Password -->
-        <div class="form-group">
-          <label for="confirm-password">Confirm Password:</label>
-          <input
-            type="password"
-            class="form-control"
-            name="confirm-password"
-            id="confirm-password"
-            placeholder="********"
-            formControlName="confirmPassword"
-          />
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label for="confirm-password">Confirm Password:</label>
+              <input
+                type="password"
+                class="form-control"
+                name="confirm-password"
+                id="confirm-password"
+                placeholder="********"
+                formControlName="confirmPassword"
+              />
 
-          <!-- Confirm Password Validation Error -->
-          <div
-            *ngIf="
+              <!-- Confirm Password Validation Error -->
+              <div
+                *ngIf="
               registerForm.get('confirmPassword')?.invalid &&
               registerForm.get('confirmPassword')?.touched
             "
-          >
-            <!-- Can't be empty -->
-            <span
-              class="text-danger"
-              *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
-            >
+              >
+                <!-- Can't be empty -->
+                <span
+                  class="text-danger"
+                  *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
+                >
               Confirm Password can't be empty.
             </span>
 
-            <!-- Minimum length of 8 -->
-            <span
-              class="text-danger"
-              *ngIf="registerForm.get('confirmPassword')?.hasError('minlength')"
-            >
+                <!-- Minimum length of 8 -->
+                <span
+                  class="text-danger"
+                  *ngIf="registerForm.get('confirmPassword')?.hasError('minlength')"
+                >
               Minimum length of 8.
             </span>
 
-            <!-- Must match password field -->
-            <span
-              class="text-danger"
-              *ngIf="
+                <!-- Must match password field -->
+                <span
+                  class="text-danger"
+                  *ngIf="
                 registerForm
                   .get('confirmPassword')
                   ?.hasError('passwordMismatch')
               "
-            >
+                >
               Passwords do not match.
             </span>
-          </div>
-        </div>
+              </div>
+            </div>
 
-        <!-- Control Buttons -->
-        <div class="row">
-          <input
-            type="submit"
-            class="col btn btn-primary m-1"
-            value="Create Account"
-            [disabled]="registerForm.invalid"
-          />
+            <!-- Control Buttons -->
+            <div class="row">
+              <input
+                type="submit"
+                class="col btn btn-primary m-1"
+                value="Create Account"
+                [disabled]="registerForm.invalid"
+              />
 
-          <input type="reset" class="col btn btn-secondary m-1" value="Clear" />
+              <input type="reset" class="col btn btn-secondary m-1" value="Clear" />
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>

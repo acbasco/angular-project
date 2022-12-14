@@ -1,26 +1,25 @@
-import { Injectable, OnInit } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import {Injectable, OnInit} from '@angular/core';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService implements OnInit {
-  token!: string;
-
-  constructor(private jwtHelper: JwtHelperService) {}
+  constructor(private jwtHelper: JwtHelperService) {
+  }
 
   ngOnInit(): void {
-    this.token = localStorage.getItem('access_token')!;
   }
 
   onLogin(jwt: string): void {
     // Save token
-    this.token = jwt;
-    localStorage.setItem('access_token', this.token);
+    localStorage.setItem('access_token', jwt);
   }
 
-  isLoggedIn() {
-    return !this.jwtHelper.isTokenExpired(this.token);
+  isLoggedIn(): boolean {
+    const token: string = localStorage.getItem('access_token') ?? '';
+    console.log(`Token: ${token}`);
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
   onLogout(): void {

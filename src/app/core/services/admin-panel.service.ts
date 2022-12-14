@@ -6,10 +6,12 @@ import { Injectable } from '@angular/core';
 export class AdminPanelService {
   private _page: number = 1;
   get page(): number {
+    this._page = Number(localStorage.getItem('page')!);
     return this._page;
   }
 
   set page(value: number) {
+    localStorage.setItem('page', value.toString());
     this._page = value;
   }
 
@@ -25,10 +27,12 @@ export class AdminPanelService {
   */
   private _order: number = 1;
   get order(): number {
+    this._order = Number(localStorage.getItem('order')!);
     return this._order;
   }
 
   set order(value: number) {
+    localStorage.setItem('order', value.toString());
     this._order = value;
   }
 

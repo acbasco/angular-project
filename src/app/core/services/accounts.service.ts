@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Account } from '../models/account';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -13,23 +13,27 @@ import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AccountsService {
+export class AccountsService implements OnInit {
   private baseUrl: string = 'https://acbasco.com/angular-api';
   private _account!: Account | null;
   get account(): Account | null {
+    this.account = JSON.parse(localStorage.getItem('account')!);
     return this._account;
   }
 
   set account(value: Account | null) {
+    localStorage.setItem('account', JSON.stringify(value));
     this._account = value;
   }
 
   private _accounts: Account[] = [];
   get accounts(): Account[] {
+    this._accounts = JSON.parse(localStorage.getItem('accounts')!);
     return this._accounts;
   }
 
   set accounts(value: Account[]) {
+    localStorage.setItem('accounts', JSON.stringify(value));
     this._accounts = value;
   }
 
@@ -37,6 +41,11 @@ export class AccountsService {
     private http: HttpClient,
     private authService: AuthenticationService
   ) {}
+
+  ngOnInit(): void {
+    this.account = JSON.parse(localStorage.getItem('account')!);
+    this.accounts = JSON.parse(localStorage.getItem('accounts')!);
+  }
 
   checkEmail(email: string): Observable<CheckEmailResponse> {
     const url: string = this.baseUrl + '/check-email.php';
@@ -93,6 +102,8 @@ export class AccountsService {
   }
 
   logout(): void {
+    // Clear account
+    localStorage.clear()
     this.account = null;
     this.accounts = [];
     this.authService.onLogout();

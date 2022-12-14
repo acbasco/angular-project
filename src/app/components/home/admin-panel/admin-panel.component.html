@@ -2,6 +2,25 @@
   <table class="table table-bordered table-striped table-dark">
     <thead class="thead-dark">
       <tr>
+        <th scope="col" colspan="1">Manage Users</th>
+        <th scope="col" colspan="3">
+          <form class="form-row">
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search account..."
+              />
+            </div>
+          </form>
+        </th>
+        <th scope="col">
+          <button class="btn btn-success" (click)="onCreateAccount()">
+            Create Account
+          </button>
+        </th>
+      </tr>
+      <tr>
         <th scope="col">
           <button class="btn btn-link" (click)="onSortTable(1)">
             <img
@@ -62,13 +81,17 @@
             <strong>Member Since</strong>
           </button>
         </th>
-        <th scope="col">Actions</th>
+        <th scope="col" class="text-center">
+          <strong>Actions</strong>
+        </th>
       </tr>
+    </thead>
+    <tbody>
       <tr *ngFor="let account of accounts">
         <th scope="row">{{ account.id }}</th>
         <td>{{ account.name }}</td>
         <td>{{ account.email }}</td>
-        <td>{{ account.dateJoined | date: "MMM d, y h:mm a" }}</td>
+        <td>{{ account.dateJoined | date : "MMM d, y h:mm a" }}</td>
         <td>
           <button
             class="btn btn-primary"
@@ -78,24 +101,68 @@
           </button>
         </td>
       </tr>
-    </thead>
+    </tbody>
   </table>
 </div>
+
+<!-- Pagination -->
 <div class="row" *ngIf="totalPages !== null">
   <div class="col">
     <ul class="pagination pagination-lg justify-content-center">
-      <li
-        class="page-item"
-        *ngFor="let page of pages; let i = index"
-        routerLinkActive="active"
-      >
-        <a
+      <li class="page-item">
+        <button class="page-link" (click)="onPaginationNavigate('first')">
+          First
+        </button>
+      </li>
+      <li class="page-item">
+        <button
           class="page-link"
-          [routerLink]="['/home', 'admin-panel']"
-          [queryParams]="{ page: i + 1 }"
-          [queryParamsHandling]="'merge'"
-          >{{ i + 1 }}</a
+          (click)="onPaginationNavigate('previous')"
+          [disabled]="checkPage('previous')"
         >
+          Previous
+        </button>
+      </li>
+      <li class="page-item">
+        <form
+          [formGroup]="paginationPageForm"
+          (ngSubmit)="onPaginationNavigate('jump')"
+        >
+          <input
+            type="number"
+            name="selectedPage"
+            formControlName="selectedPage"
+            class="page-link"
+            [value]="getCurrentPage()"
+          />
+        </form>
+      </li>
+      <!--      <li-->
+      <!--        class="page-item"-->
+      <!--        *ngFor="let page of pages; let i = index"-->
+      <!--        routerLinkActive="active"-->
+      <!--      >-->
+      <!--        <a-->
+      <!--          class="page-link"-->
+      <!--          [routerLink]="['/home', 'admin-panel']"-->
+      <!--          [queryParams]="{ page: i + 1 }"-->
+      <!--          [queryParamsHandling]="'merge'"-->
+      <!--          >{{ i + 1 }}</a-->
+      <!--        >-->
+      <!--      </li>-->
+      <li class="page-item">
+        <button
+          class="page-link"
+          (click)="onPaginationNavigate('next')"
+          [disabled]="checkPage('next')"
+        >
+          Next
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" (click)="onPaginationNavigate('last')">
+          Last ({{ totalPages }})
+        </button>
       </li>
     </ul>
   </div>

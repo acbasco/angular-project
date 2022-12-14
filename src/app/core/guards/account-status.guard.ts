@@ -5,17 +5,23 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AccountsService } from '../services/accounts.service';
+import { Account } from '../models/account';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountStatusGuard implements CanActivate {
-  constructor(public accountsService: AccountsService) {}
+  constructor() {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    return this.accountsService.account != null;
+    let account: Account = JSON.parse(localStorage.getItem('account')!);
+    if (account == null) {
+      return false;
+    } else {
+      return account.accountStatus == 1;
+    }
   }
 }
