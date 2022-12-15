@@ -61,8 +61,6 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
             this.pages = Array(this.totalPages)
               .fill(0)
               .map((x, i) => i);
-
-            console.log(this.totalPages);
           });
 
         // Pagination Form Setup

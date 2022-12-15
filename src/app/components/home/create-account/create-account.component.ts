@@ -59,8 +59,8 @@ export class CreateAccountComponent implements OnInit {
       this.createAccountForm.get('email')?.value,
       this.createAccountForm.get('password')?.value,
       null,
-      0,
-      1
+      this.createAccountForm.get('adminStatus')?.value,
+      this.createAccountForm.get('accountStatus')?.value
     );
 
     this.createAccountSub = this.accountsService
