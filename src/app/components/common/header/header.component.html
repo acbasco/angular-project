@@ -10,15 +10,31 @@
     Admin Panel
   </a>
 
-  <ul class="navbar-nav ml-auto">
-    <li class="nav-item" [class.active]="isActive('admin-panel')">
-      <a class="nav-link" (click)="onNavigateToAdminPanel()">Admin Panel</a>
-    </li>
-    <li class="nav-item" [class.active]="isActive('account-details')">
-      <a class="nav-link" (click)="onViewAccount()">Account</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" (click)="onLogout()">Logout</a>
-    </li>
-  </ul>
+  <!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+  <button
+    class="btn btn-primary"
+    type="button"
+    [hidden]="isHamburgerVisible"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li
+        class="nav-item"
+        [class.active]="isActive('admin-panel')"
+        data-toggle="collapse"
+        data-target=".navbar-collapse.show"
+      >
+        <a class="nav-link" (click)="onNavigateToAdminPanel()">Admin Panel</a>
+      </li>
+      <li class="nav-item" [class.active]="isActive('account-details')">
+        <a class="nav-link" (click)="onViewAccount()">Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="onLogout()">Logout</a>
+      </li>
+    </ul>
+  </div>
 </nav>

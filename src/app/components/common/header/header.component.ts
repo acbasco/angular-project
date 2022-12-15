@@ -11,6 +11,7 @@ import { AdminPanelService } from '../../../core/services/admin-panel.service';
 })
 export class HeaderComponent implements OnInit {
   page!: number;
+  isHamburgerVisible: boolean = false;
 
   constructor(
     private accountsService: AccountsService,
@@ -63,5 +64,9 @@ export class HeaderComponent implements OnInit {
         relativeTo: this.activatedRoute,
       })
       .then();
+  }
+
+  onToggleHamburger(): void {
+    this.isHamburgerVisible = !this.isHamburgerVisible;
   }
 }
