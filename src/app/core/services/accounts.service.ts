@@ -95,17 +95,29 @@ export class AccountsService implements OnInit {
   //   return this.accounts;
   // }
 
-  getAccounts(page: number, order: number): Observable<AccountsResponse> {
+  getAccounts(
+    page: number,
+    order: number,
+    search?: string
+  ): Observable<AccountsResponse> {
+    let appendedUrl: string =
+      search != null
+        ? `/accounts.php?page=${page}&order=${order}&search=${search}`
+        : `/accounts.php?page=${page}&order=${order}`;
     const url: string =
-      this.baseUrl + `/accounts.php?page=${page}&order=${order}`;
+      this.baseUrl + appendedUrl;
     return this.http.get<AccountsResponse>(url);
+  }
+
+  clear(): void {
+    this.account = null;
+    this.accounts = [];
   }
 
   logout(): void {
     // Clear account
-    localStorage.clear()
-    this.account = null;
-    this.accounts = [];
+    localStorage.clear();
+    this.clear();
     this.authService.onLogout();
   }
 }

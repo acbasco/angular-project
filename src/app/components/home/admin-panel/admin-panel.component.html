@@ -6,11 +6,15 @@
         <th scope="col" colspan="3">
           <form class="form-row">
             <div class="col">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Search account..."
-              />
+              <form [formGroup]="searchForm">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search account..."
+                  formControlName="search"
+                  (input)="onSearchAccount($event)"
+                />
+              </form>
             </div>
           </form>
         </th>
@@ -126,14 +130,15 @@
       <li class="page-item">
         <form
           [formGroup]="paginationPageForm"
-          (ngSubmit)="onPaginationNavigate('jump')"
         >
           <input
             type="number"
             name="selectedPage"
             formControlName="selectedPage"
             class="page-link"
-            [value]="getCurrentPage()"
+            min="1"
+            [max]="totalPages"
+            (input)="onPaginationNavigate('jump')"
           />
         </form>
       </li>
@@ -161,7 +166,7 @@
       </li>
       <li class="page-item">
         <button class="page-link" (click)="onPaginationNavigate('last')">
-          Last ({{ totalPages }})
+          Last (<span [innerHTML]="totalPages"></span>)
         </button>
       </li>
     </ul>

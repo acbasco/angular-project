@@ -5,7 +5,6 @@ import { Account } from '../../../core/models/account';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AdminPanelService } from '../../../core/services/admin-panel.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormValidatorService } from '../../../core/services/form-validator.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -17,8 +16,11 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   currentPageSub!: Subscription;
 
   accounts!: Account[];
-  totalPages: number | undefined;
+  totalPages!: number;
   pages: number[] | undefined;
+
+  // Forms
+  searchForm!: FormGroup;
   paginationPageForm!: FormGroup;
 
   constructor(
@@ -40,10 +42,15 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
           this.adminPanelService.order = params['order'];
         }
 
+        if (params['search'] != undefined) {
+          this.adminPanelService.search = params['search'];
+        }
+
         this.accountsSub = this.accountsService
           .getAccounts(
             this.adminPanelService.page,
-            this.adminPanelService.order
+            this.adminPanelService.order,
+            this.adminPanelService.search,
           )
           .subscribe((responseData) => {
             this.accounts = responseData.accounts;
@@ -54,17 +61,25 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
             this.pages = Array(this.totalPages)
               .fill(0)
               .map((x, i) => i);
+
+            console.log(this.totalPages);
           });
+
+        // Pagination Form Setup
+        // Placed here to ensure you get valid totalPages
+        this.paginationPageForm = new FormGroup({
+          selectedPage: new FormControl(this.adminPanelService.page, [
+            Validators.required,
+            Validators.min(1),
+            Validators.max(this.totalPages!),
+          ]),
+        });
       }
     );
 
-    // Form Setup
-    this.paginationPageForm = new FormGroup({
-      selectedPage: new FormControl(null, [
-        Validators.required,
-        Validators.min(1),
-        Validators.max(this.totalPages!),
-      ]),
+    // Setup search form
+    this.searchForm = new FormGroup({
+      search: new FormControl(this.adminPanelService.search),
     });
   }
 
@@ -82,7 +97,6 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
     let newOrder: number;
 
     if (order == prevOrder) {
-      // Toggle
       newOrder = order % 2 == 0 ? --order : ++order;
     } else {
       newOrder = order;
@@ -94,6 +108,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
       queryParams: {
         page: this.adminPanelService.page,
         order: this.adminPanelService.order,
+        search: this.adminPanelService.search,
       },
     });
   }
@@ -112,10 +127,6 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCurrentPage(): number {
-    return this.adminPanelService.page;
-  }
-
   onPaginationNavigate(direction: string): void {
     let targetPage: number = 1;
 
@@ -131,9 +142,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
       }
 
       case 'next': {
-        console.log(`NEXT-CURRENT: ${this.paginationPageForm.get('selectedPage')?.value}`);
         targetPage = this.paginationPageForm.get('selectedPage')?.value + 1;
-        console.log(`NEXT-AFTER: ${targetPage}`);
         break;
       }
 
@@ -144,6 +153,8 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
 
       case 'jump': {
         targetPage = this.paginationPageForm.get('selectedPage')?.value;
+        this.adminPanelService.page = 1;
+        this.adminPanelService.order = 1;
         break;
       }
 
@@ -152,15 +163,39 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
       }
     }
 
-    console.log(`Target Page: ${targetPage}`);
     this.adminPanelService.page = targetPage;
     this.router.navigate(['/home', 'admin-panel'], {
       relativeTo: this.activatedRoute,
       queryParams: {
         page: this.adminPanelService.page,
         order: this.adminPanelService.order,
+        search: this.adminPanelService.search,
       },
-      queryParamsHandling: "merge"
     });
+  }
+
+  onSearchAccount(inputPageEvent: Event): void {
+    let input: string = (inputPageEvent.target as HTMLInputElement).value;
+    this.adminPanelService.page = 1;
+    if(input != '') {
+      this.router.navigate(['/home', 'admin-panel'], {
+        relativeTo: this.activatedRoute,
+        queryParams: {
+          page: this.adminPanelService.page,
+          order: this.adminPanelService.order,
+          search: this.searchForm.get('search')?.value
+        },
+      })
+    } else {
+      this.adminPanelService.search = '';
+      this.router.navigate(['/home', 'admin-panel'], {
+        relativeTo: this.activatedRoute,
+        queryParams: {
+          page: this.adminPanelService.page,
+          order: this.adminPanelService.order,
+          search: this.adminPanelService.search,
+        },
+      });
+    }
   }
 }

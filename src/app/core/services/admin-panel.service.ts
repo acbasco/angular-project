@@ -36,5 +36,14 @@ export class AdminPanelService {
     this._order = value;
   }
 
+  private _search: string = '';
+  get search(): string {
+    return this._search;
+  }
+
+  set search(value: string) {
+    this._search = value;
+  }
+
   constructor() {}
 }

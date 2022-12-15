@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.router
               .navigate(['/home', 'admin-panel'], {
                 relativeTo: this.activatedRoute,
-                queryParams: {page: 1, order: 1},
+                queryParams: {page: 1, order: 1, search: ''},
               })
               .then();
           } else {

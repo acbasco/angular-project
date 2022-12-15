@@ -18,11 +18,10 @@ export class AuthenticationService implements OnInit {
 
   isLoggedIn(): boolean {
     const token: string = localStorage.getItem('access_token') ?? '';
-    console.log(`Token: ${token}`);
     return !this.jwtHelper.isTokenExpired(token);
   }
 
   onLogout(): void {
-    localStorage.removeItem('access_token');
+    localStorage.clear();
   }
 }
