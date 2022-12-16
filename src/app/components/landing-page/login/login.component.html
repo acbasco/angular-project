@@ -20,24 +20,25 @@
               <!-- Email Validation Error -->
               <div
                 *ngIf="
-              loginForm.get('email')?.invalid && loginForm.get('email')?.touched
-            "
+                  loginForm.get('email')?.invalid &&
+                  loginForm.get('email')?.touched
+                "
               >
                 <!-- Can't be empty -->
                 <span
                   class="text-danger"
                   *ngIf="loginForm.get('email')?.hasError('required')"
                 >
-              Email address can't be empty.
-            </span>
+                  Email address can't be empty.
+                </span>
 
                 <!-- Valid email address -->
                 <span
                   class="text-danger"
                   *ngIf="loginForm.get('email')?.hasError('email')"
                 >
-              Please enter a valid email address.
-            </span>
+                  Please enter a valid email address.
+                </span>
               </div>
             </div>
 
@@ -57,15 +58,15 @@
               <!-- Password Validation Error -->
               <div
                 *ngIf="
-              loginForm.get('password')?.invalid &&
-              loginForm.get('password')?.touched
-            "
+                  loginForm.get('password')?.invalid &&
+                  loginForm.get('password')?.touched
+                "
               >
                 <!-- Can't be empty -->
                 <span
                   class="text-danger"
                   *ngIf="loginForm.get('password')?.hasError('required')"
-                >Password can't be empty.</span
+                  >Password can't be empty.</span
                 >
 
                 <!-- Minimum-Length of 8 -->
@@ -73,8 +74,8 @@
                   class="text-danger"
                   *ngIf="loginForm.get('password')?.hasError('minlength')"
                 >
-              Minimum of 8 characters needed.
-            </span>
+                  Minimum of 8 characters needed.
+                </span>
               </div>
             </div>
 
@@ -87,7 +88,11 @@
                 [disabled]="loginForm.invalid"
               />
 
-              <input type="reset" class="col btn btn-secondary m-1" value="Clear"/>
+              <input
+                type="reset"
+                class="col btn btn-secondary m-1"
+                value="Clear"
+              />
             </div>
           </form>
         </div>

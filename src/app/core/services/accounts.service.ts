@@ -67,6 +67,11 @@ export class AccountsService implements OnInit {
     return this.http.post<DeleteAccountResponse>(url, account);
   }
 
+  resetPassword(emails: object) {
+    const url: string = this.baseUrl + '/resetPassword.php';
+    return this.http.post(url, emails);
+  }
+
   // loginAccount(
   //   loginCredentials: LoginCredentials
   // ): Observable<LoginAccountResponse> {

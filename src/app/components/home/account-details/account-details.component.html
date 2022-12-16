@@ -115,11 +115,16 @@
             </div>
 
             <!-- Password -->
+            <div class="row">
+              <button type="button" class="btn btn-primary" (click)="onResetPassword()">
+                Reset Password
+              </button>
+            </div>
 
             <!-- Date Joined (Immutable) -->
             <div class="form-group">
               <span
-                ><strong>Date Joined: </strong
+                ><strong>Member Since: </strong
                 >{{
                   targetAccount?.dateJoined | date : "MMM d, y h:mm a"
                 }}</span
@@ -195,7 +200,7 @@
             <!-- Form Controls -->
             <div class="row">
               <button
-                class="col btn btn-danger m-1"
+                class="col btn btn-warning m-1"
                 type="button"
                 *ngIf="currentAccount.adminStatus == 1"
                 (click)="onDeletePrompt()"
@@ -206,12 +211,12 @@
 
             <!-- Delete Confirm Button Prompts -->
             <div class="row" *ngIf="deletePromptStatus">
-              <button type="button" class="btn btn-danger" (click)="onDelete()">
+              <button type="button" class="btn btn-outline-danger col m-2" (click)="onDelete()">
                 YES
               </button>
               <button
                 type="button"
-                class="btn btn-secondary"
+                class="btn btn-outline-dark col m-2"
                 (click)="onDeletePrompt()"
               >
                 NO

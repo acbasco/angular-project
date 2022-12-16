@@ -206,4 +206,17 @@ export class AccountDetailsComponent implements OnInit, OnDestroy {
       .get('accountStatus')
       ?.setValue(this.targetAccount?.accountStatus);
   }
+
+  onResetPassword(): void {
+    let emails: {} = {
+      from: this.currentAccount.email,
+      to: this.targetAccount!.email,
+    };
+
+    this.accountsService
+      .resetPassword(emails)
+      .subscribe((responseData: object) => {
+        console.log(responseData);
+      });
+  }
 }
