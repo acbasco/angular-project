@@ -14,6 +14,7 @@
                 id="name"
                 placeholder="Juan Dela Cruz"
                 formControlName="name"
+                [ngClass]="addBootstrapClass('name')"
               />
 
               <!-- Name Validation Errors -->
@@ -58,6 +59,7 @@
                 id="email"
                 placeholder="example@mail.com"
                 formControlName="email"
+                [ngClass]="addBootstrapClass('email')"
               />
 
               <!-- Email Validation Error -->
@@ -103,6 +105,7 @@
                 id="password"
                 placeholder="********"
                 formControlName="password"
+                [ngClass]="addBootstrapClass('password')"
               />
 
               <!-- Password Validation Error -->
@@ -144,6 +147,7 @@
                 id="confirm-password"
                 placeholder="********"
                 formControlName="confirmPassword"
+                [ngClass]="addBootstrapClass('confirmPassword')"
               />
 
               <!-- Confirm Password Validation Error -->
@@ -202,6 +206,7 @@
                   value="1"
                   id="adminStatusYes"
                   formControlName="adminStatus"
+                  [ngClass]="addBootstrapClass('adminStatus')"
                 />
                 <label for="adminStatusYes" class="form-check-label">
                   Enable
@@ -216,7 +221,7 @@
                   value="0"
                   id="adminStatusNo"
                   formControlName="adminStatus"
-                  checked
+                  [ngClass]="addBootstrapClass('adminStatus')"
                 />
                 <label for="adminStatusNo" class="form-check-label">
                   Disable
@@ -235,6 +240,7 @@
                   value="1"
                   id="accountStatusYes"
                   formControlName="accountStatus"
+                  [ngClass]="addBootstrapClass('accountStatus')"
                 />
                 <label for="accountStatusYes" class="form-check-label">
                   Enable
@@ -248,6 +254,7 @@
                   value="0"
                   id="accountStatusNo"
                   formControlName="accountStatus"
+                  [ngClass]="addBootstrapClass('accountStatus')"
                 />
                 <label for="accountStatusNo" class="form-check-label">
                   Disable

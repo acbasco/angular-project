@@ -13,38 +13,39 @@
                 id="name"
                 placeholder="Juan Dela Cruz"
                 formControlName="name"
+                [ngClass]="addBootstrapClass('name')"
               />
 
               <!-- Name Validation Errors -->
               <div
                 *ngIf="
-              registerForm.get('name')?.invalid &&
-              registerForm.get('name')?.touched
-            "
+                  registerForm.get('name')?.invalid &&
+                  registerForm.get('name')?.touched
+                "
               >
                 <!-- Can't be empty -->
                 <span
                   class="text-danger"
                   *ngIf="registerForm.get('name')?.hasError('required')"
                 >
-              Name can't be empty.
-            </span>
+                  Name can't be empty.
+                </span>
 
                 <!-- Minimum Length of 2 -->
                 <span
                   class="text-danger"
                   *ngIf="registerForm.get('name')?.hasError('minlength')"
                 >
-              Minimum length of 2.
-            </span>
+                  Minimum length of 2.
+                </span>
 
                 <!-- No Whitespace -->
                 <span
                   class="text-danger"
                   *ngIf="registerForm.get('name')?.hasError('whitespace')"
                 >
-              Spaces only not allowed.
-            </span>
+                  Spaces only not allowed.
+                </span>
               </div>
             </div>
 
@@ -57,38 +58,39 @@
                 id="email"
                 placeholder="example@mail.com"
                 formControlName="email"
+                [ngClass]="addBootstrapClass('email')"
               />
 
               <!-- Email Validation Error -->
               <div
                 *ngIf="
-              registerForm.get('email')?.invalid &&
-              registerForm.get('email')?.touched
-            "
+                  registerForm.get('email')?.invalid &&
+                  registerForm.get('email')?.touched
+                "
               >
                 <!-- Can't be empty -->
                 <span
                   class="text-danger"
                   *ngIf="registerForm.get('email')?.hasError('required')"
                 >
-              Email address can't be empty.
-            </span>
+                  Email address can't be empty.
+                </span>
 
                 <!-- Valid email address -->
                 <span
                   class="text-danger"
                   *ngIf="registerForm.get('email')?.hasError('email')"
                 >
-              Please enter a valid email address.
-            </span>
+                  Please enter a valid email address.
+                </span>
 
                 <!-- Email already in use -->
                 <span
                   class="text-danger"
                   *ngIf="registerForm.get('email')?.hasError('emailInUse')"
                 >
-              Email address is already in use.
-            </span>
+                  Email address is already in use.
+                </span>
               </div>
             </div>
 
@@ -102,30 +104,31 @@
                 id="password"
                 placeholder="********"
                 formControlName="password"
+                [ngClass]="addBootstrapClass('password')"
               />
 
               <!-- Password Validation Error -->
               <div
                 *ngIf="
-              registerForm.get('password')?.invalid &&
-              registerForm.get('password')?.touched
-            "
+                  registerForm.get('password')?.invalid &&
+                  registerForm.get('password')?.touched
+                "
               >
                 <!-- Can't be empty -->
                 <span
                   class="text-danger"
                   *ngIf="registerForm.get('password')?.hasError('required')"
                 >
-              Password can't be empty.
-            </span>
+                  Password can't be empty.
+                </span>
 
                 <!-- Minimum length of 8 -->
                 <span
                   class="text-danger"
                   *ngIf="registerForm.get('password')?.hasError('minlength')"
                 >
-              Minimum length of 8.
-            </span>
+                  Minimum length of 8.
+                </span>
               </div>
             </div>
 
@@ -139,42 +142,47 @@
                 id="confirm-password"
                 placeholder="********"
                 formControlName="confirmPassword"
+                [ngClass]="addBootstrapClass('confirmPassword')"
               />
 
               <!-- Confirm Password Validation Error -->
               <div
                 *ngIf="
-              registerForm.get('confirmPassword')?.invalid &&
-              registerForm.get('confirmPassword')?.touched
-            "
+                  registerForm.get('confirmPassword')?.invalid &&
+                  registerForm.get('confirmPassword')?.touched
+                "
               >
                 <!-- Can't be empty -->
                 <span
                   class="text-danger"
-                  *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
+                  *ngIf="
+                    registerForm.get('confirmPassword')?.hasError('required')
+                  "
                 >
-              Confirm Password can't be empty.
-            </span>
+                  Confirm Password can't be empty.
+                </span>
 
                 <!-- Minimum length of 8 -->
                 <span
                   class="text-danger"
-                  *ngIf="registerForm.get('confirmPassword')?.hasError('minlength')"
+                  *ngIf="
+                    registerForm.get('confirmPassword')?.hasError('minlength')
+                  "
                 >
-              Minimum length of 8.
-            </span>
+                  Minimum length of 8.
+                </span>
 
                 <!-- Must match password field -->
                 <span
                   class="text-danger"
                   *ngIf="
-                registerForm
-                  .get('confirmPassword')
-                  ?.hasError('passwordMismatch')
-              "
+                    registerForm
+                      .get('confirmPassword')
+                      ?.hasError('passwordMismatch')
+                  "
                 >
-              Passwords do not match.
-            </span>
+                  Passwords do not match.
+                </span>
               </div>
             </div>
 
@@ -187,7 +195,11 @@
                 [disabled]="registerForm.invalid"
               />
 
-              <input type="reset" class="col btn btn-secondary m-1" value="Clear" />
+              <input
+                type="reset"
+                class="col btn btn-secondary m-1"
+                value="Clear"
+              />
             </div>
           </form>
         </div>

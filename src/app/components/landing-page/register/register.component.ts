@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import { FormValidatorService } from '../../../core/services/form-validator.service';
 import { Account } from '../../../core/models/account';
 import { AccountsService } from '../../../core/services/accounts.service';
@@ -72,6 +72,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     // Clear the form
     this.registerForm.reset();
+  }
+
+  addBootstrapClass(element: string): { [tag: string]: boolean } {
+    let tag: AbstractControl = this.registerForm.get(element)!;
+    return {
+      'is-valid': tag.valid && tag.touched,
+      'is-invalid': tag.invalid && tag.touched,
+    };
   }
 
   ngOnDestroy(): void {

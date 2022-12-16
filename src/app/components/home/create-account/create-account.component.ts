@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {AccountsService} from "../../../core/services/accounts.service";
@@ -83,5 +83,13 @@ export class CreateAccountComponent implements OnInit {
 
   onGoBack(): void {
     this.location.back();
+  }
+
+  addBootstrapClass(element: string): { [tag: string]: boolean } {
+    let tag: AbstractControl = this.createAccountForm.get(element)!;
+    return {
+      'is-valid': tag.valid && tag.touched,
+      'is-invalid': tag.invalid && tag.touched,
+    };
   }
 }

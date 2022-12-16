@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginCredentials} from '../../../core/models/login-credentials';
 import {AccountsService} from '../../../core/services/accounts.service';
 import {ToastrService} from 'ngx-toastr';
@@ -83,5 +83,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.loginSub?.unsubscribe();
+  }
+
+  addBootstrapClass(element: string): { [tag: string]: boolean } {
+    let tag: AbstractControl = this.loginForm.get(element)!;
+    return {
+      'is-valid': tag.valid && tag.touched,
+      'is-invalid': tag.invalid && tag.touched,
+    };
   }
 }
